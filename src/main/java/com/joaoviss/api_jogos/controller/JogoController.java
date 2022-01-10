@@ -26,19 +26,18 @@ public class JogoController {
         return jogoRepository.findAll();
     }
     
-    @RequestMapping(value = "/jogo/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/jogos/{id}", method = RequestMethod.GET)
     public ResponseEntity<Jogo> GetById(@PathVariable(value = "id") Long id) {
         Optional<Jogo> jogo = jogoRepository.findById(id);
-        if (jogo.isPresent())
-            return new ResponseEntity<Jogo>(jogo.get(), HttpStatus.OK);
-            else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return (jogo.isPresent()) ?
+            new ResponseEntity<Jogo>(jogo.get(), HttpStatus.OK) :
+            new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
         
-        @RequestMapping(value = "/jogo", method = RequestMethod.POST)
-        public Jogo save(@RequestBody Jogo jogo) {
-            return jogoRepository.save(jogo);
-        }
+    @RequestMapping(value = "/jogos", method = RequestMethod.POST)
+    public Jogo save(@RequestBody Jogo jogo) {
+        return jogoRepository.save(jogo);
+    }
         
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public ResponseEntity<String> delete(@PathVariable(value = "id") Long id) {
@@ -48,6 +47,5 @@ public class JogoController {
             return new ResponseEntity<String>("Jogo "+id+"deletado com sucesso!", HttpStatus.OK);
         } else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        
     }
 }

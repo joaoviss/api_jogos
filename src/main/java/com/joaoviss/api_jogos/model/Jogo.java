@@ -1,6 +1,5 @@
 package com.joaoviss.api_jogos.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

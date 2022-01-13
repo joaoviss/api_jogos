@@ -1,14 +1,16 @@
 package com.joaoviss.api_jogos.api.controller;
 
 import java.util.List;
-
 import com.joaoviss.api_jogos.domain.model.Jogo;
 import com.joaoviss.api_jogos.domain.repository.JogoRepository;
+import com.joaoviss.api_jogos.domain.services.CatalogoJogoService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import lombok.AllArgsConstructor;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,39 +22,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @CrossOrigin
+@AllArgsConstructor
 @RestController
 @RequestMapping("/jogos")
 public class JogoController {
     
-    @Autowired
     private JogoRepository jogoRepository;
-    
+    private CatalogoJogoService catalogoJogoService;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Jogo save(@RequestBody Jogo jogo) {
-        return jogoRepository.save(jogo);
+        return catalogoJogoService.save(jogo);
     }
         
     @GetMapping
     public List<Jogo> listAll() {
-        return jogoRepository.findAll();
+        return catalogoJogoService.listAll();
     }
     
     @GetMapping("/{id}")
     public ResponseEntity<Jogo> getById(@PathVariable(value = "id") Long id) {
-        return jogoRepository.findById(id)
-            .map (jogo -> ResponseEntity.ok(jogo))
-            .orElse(ResponseEntity.notFound().build());
+        return catalogoJogoService.getById(id);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Jogo> update(@PathVariable Long id, @RequestBody Jogo jogo) {
-        if(!jogoRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        jogo.setId(id);
-        jogo = jogoRepository.save(jogo);
-        return ResponseEntity.ok(jogo);
+        return catalogoJogoService.update(id, jogo);
     }
 
     @DeleteMapping("/{id}")

@@ -1,8 +1,10 @@
-package com.joaoviss.api_jogos.controller;
+package com.joaoviss.api_jogos.api.controller;
 
 import java.util.List;
-import com.joaoviss.api_jogos.model.Jogo;
-import com.joaoviss.api_jogos.repository.JogoRepository;
+
+import com.joaoviss.api_jogos.domain.model.Jogo;
+import com.joaoviss.api_jogos.domain.repository.JogoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

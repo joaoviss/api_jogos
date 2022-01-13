@@ -1,4 +1,4 @@
-package com.joaoviss.api_jogos.model;
+package com.joaoviss.api_jogos.domain.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
